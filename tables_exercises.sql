@@ -4,16 +4,18 @@ USE employees;
 
 SHOW TABLES;
 -- Different type of table--
--- Current_dep_emp, departments, dep_emp, dept_emp_latest_date, dep_manager, employees, salaries, title --
-
+--int, date, varchar, enum, date 
+describe employees;
 -- which table contains numberical strings-- 
--- empo_no, birth_data, hire_date
+show tables; 
+-- probably all of them, because all should have a primary key 
+
 
 -- Which table(s) do you think contain a string type column?--
--- first_name, last_name, gender 
+-- employees, titles, departments 
 
 -- Which table(s) do you think contain a date type column?
--- birth_date
+-- dept_emp_latest_date, employee, titles, salaries, employees, dept_manager, departments, current_dep_emp 
 
  -- What is the relationship between the employees and the departments tables?
  -- There is no similar in colums between departments and employees but all employess belong to one of the departments. 
