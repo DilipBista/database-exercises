@@ -9,6 +9,7 @@ Where first_name IN ('Irena', 'Vidya', 'Maya');
 -- 709 records 
 
 
+
 -- 3. Find all current or previous employees with first names 'Irena', 'Vidya', or 'Maya', as in Q2, but use OR instead of IN. Enter a comment with the number of records returned. Does it match number of rows from Q2?
 
 SELECT *
