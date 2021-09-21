@@ -1,6 +1,6 @@
 use employees;
 
--- 2. Find all employees with first names 'Irena', 'Vidya', or 'Maya', and order your results returned by first name. In your comments, answer: What was the first and last name in the first row of the results? What was the first and last name of the last person in the table?
+-- 2. Find all employees with first names 'Irena', 'Vidya', or 'Maya', and order your results returned by first name. In your comments, answer: What was the first and last name in the first row of the results? What was the first and last name of the last person in the table? 709
 
 SELECT *
 from employees 
@@ -54,19 +54,33 @@ ORDER BY birth_date DESC;
 
 SELECT COUNT(*) FROM employees
 WHERE last_name like '%e' AND last_name like 'e%'
-ORDER BY hire_date ;
+ORDER BY hire_date ; 
+
 
 -- 899 
 
 -- 7. Find all employees hired in the 90s and born on Christmas. Sort the results so that the oldest employee who was hired last is the first result. Enter a comment with the number of employees returned, the name of the oldest employee who was hired last, and the name of the youngest emmployee who was hired first. 
+
+
 SELECT *
 FROM employees 
 Where (hire_date BETWEEN '1990-01-01' AND '1999-12-31')
 AND birth_date LIKE '%12-25'
-ORDER BY  hire_date;
+ORDER BY  hire_date DESC, birth_date;
 
--- Aselmn Cappello 
---  KHUN Bernini 
+
+--  KHUN Bernini (Oldest employee who was hired last)
+
+SELECT*
+FROM employees 
+WHere (hire_date  BETWEEN ' 1990-01-01' AND  '1999-12-31')
+AND birth_date LIKE  '%12-25'
+ORDER BY birth_date DESC, hire_date ASC;
+
+-- Douadi Pettis ( Youngest employee who was hired first) 
+
+
+
 
  
 
