@@ -16,7 +16,7 @@ WHERE (last_name LIKE '%E' AND  last_name like 'E%')
 GROUP BY last_name;
 
 
--- 4. Write a query to to find all unique combinations of first and last names of all employees whose last names start and end with 'E'.
+-- 4. Write a query to to find all unique combinations of first and last names of all employees whose last names start and end with 'E'. 846
 SELECT CONCAT(first_name, ' ', last_name) AS full_name
 FROM employees
 WHERE last_name like '%e' AND last_name like 'e%'
@@ -35,7 +35,7 @@ GROUP BY last_name;
 
 
 
--- 6. Add a COUNT() to your results (the query above) to find the number of employees with the same last name. (  (189 +190+ 168 = 547) 
+-- 6. Add a COUNT() to your results (the query above) to find the number of employees with the same last name. (  (189 +190+ 168 = 54) 
 
 SELECT last_name,  COUNT(last_name)
 FROM employees 
@@ -52,7 +52,7 @@ GROUP BY first_name;
 
 -- Total Vidya 232, Irena, 241, Maya 236 
 
-SELECT first_name AS 'First Name', 
+SELECT first_name AS 'First Name',             # adding sum function helps to combine genders and shown each gender separetely 
 sum(gender='M') AS 'MALES', 
 sum(gender='F') AS 'FEMALES'
 FROM employees 
@@ -60,9 +60,14 @@ WHERE first_name IN ('Irena' , 'Vidya', 'Maya')
 group by first_name;
 
 -- Male Vidya 151, Irena 144, Maya 146 
+SELECT gender, first_name, count(first_name).  # this is my approach but it doesnot shows two gender separetly in one table 
+FROM employees 
+WHERE (first_name = 'Irena' OR first_name = 'Vidya'  OR  first_name ='Maya')
+AND gender = 'M' 
+group by first_name;
 
 -- Female  VIdya 81, Irena 97, Maya 90 
-SELECT gender, first_name, count(first_name)
+SELECT gender, first_name, count(first_name)  # # this is my approach but it doesnot shows two gender separetly in one table 
 FROM employees 
 WHERE (first_name = 'Irena' OR first_name = 'Vidya'  OR  first_name ='Maya')
 AND gender = 'F' 
@@ -102,6 +107,44 @@ Find the maximum salary for each current employee.
 Now find the max salary for each current employee where that max salary is greater than $150,000.
 Find the current average salary for each employee where that average salary is between $80k and $90k.*/
 
+-- Find the historic average salary for all employees. Now determine the current average salary.
+SELECT avg(Salary) AS Historical_Average
+FROM salaries;
+
+SELECT avg(Salary) AS CURRENT_Average
+FROM Salaries 
+WHERE to_date > CURDATE();
+
+-- find the historic average salary for each employee. Reminder that when you hear "for each" in the problem statement, you'll probably be grouping by that exact column.
+
+SELECT emp_no AS EMployess, avg(salary) AS AvG_salary
+FROM salaries
+GROUP BY emp_no;
+
+-- Find the current average salary for each employee.
+SELECT emp_no AS Employees, avg(salary) AS AVG_salary 
+FROM salaries
+WHERE to_date > CURDATE()
+GROUP BY emp_no;
+
+-- Find the maximum salary for each current employee.
+SELECT emp_no AS Employees, MAX(salary) AS Max_Salary 
+FROM salaries 
+WHERE to_date > CURDATE()
+GROUP BY emp_no;
+
+-- Now find the max salary for each current employee where that max salary is greater than $150,000.
+
+SELECT emp_no AS Employee, MAX(salary) AS Maximum_Salary
+FROM salaries
+WHERE to_date > NOW() AND salary > 150000
+GROUP BY emp_no;
+
+-- Find the current average salary for each employee where that average salary is between $80k and $90k
+SELECT emp_no AS Employee, avg(salary) AS Average_Salary
+FROM salaries
+WHERE to_date > NOW() AND (salary BETWEEN 80000 AND 90000)
+GROUP BY emp_no;
 
 
 
