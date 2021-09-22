@@ -52,10 +52,11 @@ GROUP BY first_name;
 
 -- Total Vidya 232, Irena, 241, Maya 236 
 
-SELECT gender, first_name, count(first_name)
+SELECT first_name AS 'First Name', 
+sum(gender='M') AS 'MALES', 
+sum(gender='F') AS 'FEMALES'
 FROM employees 
-WHERE (first_name = 'Irena' OR first_name = 'Vidya'  OR  first_name ='Maya')
-AND gender = 'M' 
+WHERE first_name IN ('Irena' , 'Vidya', 'Maya')
 group by first_name;
 
 -- Male Vidya 151, Irena 144, Maya 146 
@@ -70,11 +71,28 @@ group by first_name;
 
 -- 8. Using your query that generates a username for all of the employees, generate a count employees for each unique username. Are there any duplicate usernames? BONUS: How many duplicate usernames are there? ( 6 duplicates) 
 
-select DISTINCT concat(substr(lower(first_name), 1, 1), 
-substr(lower(last_name), 1, 4), 
-substr(birth_date, 6, 2), 
-substr(birth_date, 3, 2)) AS  username, 
-first_name, last_name, birth_date from employees;
+SELECT COUNT(LOWER( CONCAT( 
+		 SUBSTR(first_name,1,1), #first initial of first name 
+		 SUBSTR(last_name,1,4),  #first 4 of last name
+		'_', 
+		DATE_FORMAT(birth_date, '%m'), # month
+		DATE_FORMAT(birth_date, '%y') # last two digits of year
+		)))
+		AS ALL_Usernames,
+		
+		COUNT(DISTINCT LOWER( CONCAT( 
+		 SUBSTR(first_name,1,1), #first initial of first name 
+		 SUBSTR(last_name,1,4),  #first 4 of last name
+		'_', 
+		DATE_FORMAT(birth_date, '%m'), # month
+		DATE_FORMAT(birth_date, '%y') # last two digits of year
+		)))
+		AS Unique_Usernames,
+		
+		300024-285872 AS Duplicate_Usernames
+		
+FROM employees;
+		
 
 -- 9. More practice with aggregate functions:
 /* Find the historic average salary for all employees. Now determine the current average salary.
@@ -83,6 +101,8 @@ Find the current average salary for each employee.
 Find the maximum salary for each current employee.
 Now find the max salary for each current employee where that max salary is greater than $150,000.
 Find the current average salary for each employee where that average salary is between $80k and $90k.*/
+
+
 
 
 
