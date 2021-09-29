@@ -45,7 +45,8 @@ SELECT COUNT(*),
 from employees as old
 GROUP BY decade;
 
-SELECT COUNT(*)
+/*
+select COUNT(*)
 FROM 
 	(SELECT 
 	CASE 
@@ -54,25 +55,70 @@ FROM
 		ELSE 'Null'
 	end as decade
 from employees)as ts
-group by decade;
-
-
+group By decade;
+*/
+/*
+SELECT 
+	CASE 
+		WHEN birth_date LIKE '195%' THEN '50s' 
+		WHEN birth_date LIKE '196%' THEN '60s' 
+		ELSE 'Null'
+	end as decade
+from employees;
+*/
 
 -- BONUS 
 -- 1. What is the current average salary for each of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service?
 
 
-SELECT dept_name, salary
+SELECT dept_name, avg(salary)
 From departments
 JOIN dept_emp USING (dept_no)
-JOIN salaries USING (emp_no);
+JOIN salaries USING (emp_no)
+group By dept_name;
 
 SELECT 
+	CASE
+		  WHEN dept_name IN ('research', 'development') THEN 'R&D'
+           WHEN dept_name IN ('sales', 'marketing') THEN 'Sales & Marketing' 
+           WHEN dept_name IN ('Production', 'Quality Management') THEN 'Prod & QM'
+           WHEN dept_name IN ('Finance', 'Human Resources') THEN 'Finance & HR'
+           ELSE dept_name
+           END AS dept_group,
+           	ROUND (avg(salary),2)as avg_salary
+           FROM departments
+           JOIN dept_emp USING (dept_no)
+		JOIN salaries USING (emp_no)
+		WHERE salaries.to_date >now()
+		GROUP BY dept_group;
+	
 
+/* checking dept_name and avg(salary)
 
+select dept_name, avg(salary)
+ FROM departments
+         JOIN dept_emp USING (dept_no)
+		JOIN salaries USING (emp_no)
+		group by dept_name;
+*/
 
+/*
+Individual average 
+Marketing	71913.2000
+Finance	70489.3649
+Human Resources	55574.8794
+Production	59605.4825
+Development	59478.9012
+Quality Management	57251.2719
+Sales	80667.6058
+Research	59665.1817
+Customer Service	58770.3665
 
-
-
-
+not current average 
+78235.8136	Sales & Marketing
+62960.5156	Finance & HR
+59101.7450	Prod & QM
+59515.8784	R&D
+58770.3665	Customer Service
+*/
 
