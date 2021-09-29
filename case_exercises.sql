@@ -36,23 +36,26 @@ FROM employees;
 -- 3. How many employees (current or previous) were born in each decade?
 select * from employees;
 
-SELECT first_name, last_name, birth_date,
+SELECT COUNT(*),
 	CASE 
 	WHEN birth_date LIKE '195%' THEN '50s'
 	WHEN birth_date LIKE '196%' THEN '60s'
-	
+	ELSE 0
 	end as decade
-from employees;
+from employees as old
+GROUP BY decade;
 
-SELECT COUNT('50s'), COUNT('60s')
+SELECT COUNT(*)
 FROM 
-	(SELECT first_name, last_name, birth_date,
+	(SELECT 
 	CASE 
-	WHEN birth_date LIKE '195%' THEN '50s'
-	WHEN birth_date LIKE '196%' THEN '60s'
-	
+		WHEN birth_date LIKE '195%' THEN '50s' 
+		WHEN birth_date LIKE '196%' THEN '60s' 
+		ELSE 'Null'
 	end as decade
-from employees)as t;
+from employees)as ts
+group by decade;
+
 
 
 -- BONUS 
@@ -63,6 +66,8 @@ SELECT dept_name, salary
 From departments
 JOIN dept_emp USING (dept_no)
 JOIN salaries USING (emp_no);
+
+SELECT 
 
 
 
